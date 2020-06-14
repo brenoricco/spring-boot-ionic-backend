@@ -1,8 +1,5 @@
 package com.brenoricco.cursomc.resources;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.brenoricco.cursomc.domains.Categoria;
 import com.brenoricco.cursomc.services.CategoriaService;
 
@@ -23,7 +20,6 @@ public class CategoriaResource {
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> find(@PathVariable Integer id) {
         Categoria obj = service.buscar(id);
-
         return ResponseEntity.ok().body(obj);
     }
 }

@@ -1,7 +1,6 @@
 package com.brenoricco.cursomc.resources;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.brenoricco.cursomc.domains.Categoria;

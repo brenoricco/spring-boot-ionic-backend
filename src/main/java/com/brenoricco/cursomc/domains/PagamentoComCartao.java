@@ -1,7 +1,10 @@
 package com.brenoricco.cursomc.domains;
 
+import javax.persistence.Entity;
+
 import com.brenoricco.cursomc.domains.enums.EstadoPagamento;
 
+@Entity
 public class PagamentoComCartao extends Pagamento {
 
     private static final long serialVersionUID = 1L;

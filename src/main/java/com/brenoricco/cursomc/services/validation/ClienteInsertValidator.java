@@ -6,12 +6,19 @@ import java.util.List;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import com.brenoricco.cursomc.domains.Cliente;
 import com.brenoricco.cursomc.domains.enums.TipoCliente;
 import com.brenoricco.cursomc.dto.ClienteNewDTO;
+import com.brenoricco.cursomc.repositories.ClienteRepository;
 import com.brenoricco.cursomc.resources.exceptions.FieldMessage;
 import com.brenoricco.cursomc.services.validation.utils.BR;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, ClienteNewDTO> {
+
+    @Autowired
+    private ClienteRepository repo;
 
     @Override
     public void initialize(ClienteInsert ann) {
@@ -22,15 +29,19 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 
         List<FieldMessage> list = new ArrayList<>();
 
-        if(objDto.getTipo().equals(TipoCliente.PESSOAFISICA.getCod()) && !BR.isValidCPF(objDto.getCpfOuCnpj())) {
+        if (objDto.getTipo().equals(TipoCliente.PESSOAFISICA.getCod()) && !BR.isValidCPF(objDto.getCpfOuCnpj())) {
             list.add(new FieldMessage("cpfOuCnpj", "CPF inválido"));
         }
 
-        if(objDto.getTipo().equals(TipoCliente.PESSOAJURIDICA.getCod()) && !BR.isValidCNPJ(objDto.getCpfOuCnpj())) {
+        if (objDto.getTipo().equals(TipoCliente.PESSOAJURIDICA.getCod()) && !BR.isValidCNPJ(objDto.getCpfOuCnpj())) {
             list.add(new FieldMessage("cpfOuCnpj", "CNPJ inválido"));
         }
 
-        // inclua os testes aqui, inserindo erros na lista
+        Cliente aux = repo.findByEmail(objDto.getEmail());
+        if (aux != null) {
+            list.add(new FieldMessage("email", "Email já existente"));
+        }
+
         for (FieldMessage e : list) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName())

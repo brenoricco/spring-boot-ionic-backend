@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.brenoricco.cursomc.domains.Categoria;
+import com.brenoricco.cursomc.dto.CategoriaDTO;
 import com.brenoricco.cursomc.repositories.CategoriaRepository;
 import com.brenoricco.cursomc.services.exceptions.DataIntegrityException;
 import com.brenoricco.cursomc.services.exceptions.ObjectNotFoundException;
@@ -53,5 +54,9 @@ public class CategoriaService {
     public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
         return repo.findAll(pageRequest);
+    }
+
+    public Categoria fromDTO(CategoriaDTO objDto) {
+        return new Categoria(objDto.getId(), objDto.getNome());
     }
 }

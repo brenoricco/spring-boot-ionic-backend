@@ -6,9 +6,11 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 import com.brenoricco.cursomc.domains.Cliente;
+import com.brenoricco.cursomc.services.validation.ClienteUpdate;
 
 import org.hibernate.validator.constraints.Length;
 
+@ClienteUpdate
 public class ClienteDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -22,7 +24,7 @@ public class ClienteDTO implements Serializable {
     @Email(message = "Email inválido")
     private String email;
 
-    public ClienteDTO(){
+    public ClienteDTO() {
 
     }
 
@@ -55,6 +57,5 @@ public class ClienteDTO implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
 }
